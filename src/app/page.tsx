@@ -1,12 +1,13 @@
-import Image from "next/image";
+import { CatalogPreviewWidget } from "@/widgets/catalog/ui/CatalogPreviewWidget";
+import {BannersWidget} from "@/widgets/banner";
 
-export default function Home() {
+export default function HomePage() {
     return (
-        <main className="flex min-h-screen items-center justify-center bg-gray-900 text-white">
-            <h1 className="text-4xl font-bold">
-                Altum Market Frontend Запущен!
-            </h1>
-        </main>
+        <div className="min-h-screen bg-slate-50 py-12">
+            <main className="max-w-7xl mx-auto px-4 xl:px-0 flex flex-col gap-12 w-full">
+                <BannersWidget />
+                <CatalogPreviewWidget />
+            </main>
+        </div>
     );
 }
-

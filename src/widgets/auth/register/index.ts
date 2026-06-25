@@ -1,0 +1,1 @@
+export { RegisterFormView } from "./ui/RegisterFormView";

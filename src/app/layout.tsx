@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import {Inter, Geist, Montserrat} from "next/font/google";
+import { Inter, Geist, Montserrat } from "next/font/google";
 import "./globals.css";
-
-import {Header} from "@/widgets/header"
-import { cn } from "@/lib/utils";
+import { headers } from "next/headers";
+import { Header } from "@/widgets/header"
+import { cn } from "@/shared/lib/utils";
+import { AuthProvider } from "@/app/providers/AuthProvider";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -23,15 +24,20 @@ const montserrat = Montserrat({
     variable: "--font-montserrat",
 });
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+    const headersList = await headers();
+    const authStatus = headersList.get("x-auth-status");
+    const isAuthenticated = authStatus === "authenticated";
+
     return (
         <html lang="ru" className={cn(inter.variable, montserrat.variable)}>
-            <body className="antialiased bg-gray-50 text-gray-900 font-sans">
-                <Header />
-
-                <div className="flex-1">
-                    {children}
-                </div>
+            <body className="antialiased bg-gray-50 text-gray-900 font-sans min-h-screen flex flex-col">
+                <AuthProvider isAuthenticated={isAuthenticated}>
+                    <Header />
+                    <main className="flex-1 flex flex-col">
+                        {children}
+                    </main>
+                </AuthProvider>
         </body>
         </html>
     );
