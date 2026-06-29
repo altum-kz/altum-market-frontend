@@ -1,3 +1,5 @@
+import { ApiError } from "./error";
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "https://api.agrow.asia";
 
 interface RequestOptions {
@@ -6,7 +8,7 @@ interface RequestOptions {
 }
 
 export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
-    const response = await fetch(`${API_URL}/api/v1${path}`, {
+    const response = await fetch(`${API_URL}${path}`, {
         "method": options.method ?? "GET",
         "headers": {
             "Content-Type": "application/json",
@@ -17,7 +19,12 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
     });
 
     if (!response.ok) {
-        throw new Error(`Произошла неизвестная ошибка. Статус: ${response.status}`);
+        const errorBody = await response.json().catch(() => ({}));
+
+        throw new ApiError(
+            response.status || 500,
+            errorBody.detail ?? "Неизвестная ошибка"
+        );
     }
 
     return await response.json() as T;
