@@ -8,7 +8,7 @@ interface BaseLayoutProps {
 export function BaseLayout({ children }: BaseLayoutProps) {
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
-            <header className="w-full bg-white border-b border-gray-100 h-16">
+            <header className="w-full bg-white border-b border-gray-100 h-header-height">
                 <div className="w-full max-w-7xl h-full mx-auto flex items-center justify-between px-4 md:px-8">
 
                     <div className="text-xl font-bold tracking-tight">
@@ -46,7 +46,7 @@ export function BaseLayout({ children }: BaseLayoutProps) {
             </header>
 
             {/* КОНТЕНТНАЯ ЗОНА: Ограничена так же, как и шапка */}
-            <main className="flex-1 w-full max-w-7xl mx-auto px-4 md:px-8 py-8">
+            <main className="flex flex-1 w-full max-w-7xl mx-auto px-4 md:px-8">
                 {children}
             </main>
         </div>

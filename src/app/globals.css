@@ -3,7 +3,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+    --spacing-header-height: 64px;
+}
+
 @theme inline {
+  --color-brand: #076852;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
