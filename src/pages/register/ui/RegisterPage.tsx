@@ -9,5 +9,5 @@ export function RegisterPage() {
                 <RegisterFlowWidget/>
             </div>
         </div>
-        )
+    );
 }
