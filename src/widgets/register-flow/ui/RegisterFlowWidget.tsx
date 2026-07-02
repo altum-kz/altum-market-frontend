@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { RegisterForm } from "@/features/register";
 import { ConfirmOtpForm } from "@/features/confirm-otp";
-import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 export function RegisterFlowWidget() {
     const [step, setStep] = useState<"register" | "otp" | "success">("register");
     const [accountId, setAccountId] = useState<string | null>(null);
+
+    const router = useRouter();
 
     const handleRegisterSuccess = (newAccountId: string) => {
         setAccountId(newAccountId);
@@ -18,6 +20,12 @@ export function RegisterFlowWidget() {
         setStep("success");
     }
 
+    useEffect(() => {
+        if (step === "success") {
+            router.push("/onboarding");
+        }
+    }, [step, router]);
+
     if (step === "register") {
         return <RegisterForm onSuccess={handleRegisterSuccess}/>;
     }
@@ -26,17 +34,5 @@ export function RegisterFlowWidget() {
         return <ConfirmOtpForm accountId={accountId} onSuccess={handleOtpSuccess}/>;
     }
 
-    if (step === "success") {
-        return (
-            <div className="flex flex-col items-center gap-4 max-w-sm text-center">
-                <h2 className="text-2xl font-bold text-green-600">Почта подтверждена!</h2>
-                <p className="text-sm text-muted-foreground">
-                    Ваш аккаунт успешно создан. Теперь вы можете приступить к работе.
-                    <Link href="/login" className="text-sm text-brand">Войти</Link>
-                </p>
-                {/* Сюда можно добавить кнопку */}
-            </div>
-        );
-    }
     return null;
 }
