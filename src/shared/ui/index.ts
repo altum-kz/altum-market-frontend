@@ -27,3 +27,16 @@ export {
     CardDescription,
     CardContent,
 } from "./card";
+
+export {
+    Avatar,
+    AvatarImage,
+    AvatarFallback,
+    AvatarGroup,
+    AvatarGroupCount,
+    AvatarBadge,
+} from "./avatar";
+
+export { RadioGroup, RadioGroupItem } from "./radio-group";
+
+export { Spinner } from "./spinner";
