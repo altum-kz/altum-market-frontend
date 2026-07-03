@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Montserrat } from "next/font/google";
+import { Inter, Russo_One } from "next/font/google";
 import "@/app/globals.css";
 import {BaseLayout} from "@/app/layouts";
 
@@ -8,9 +8,10 @@ const inter = Inter({
     subsets: ["latin"],
 })
 
-const montserrat = Montserrat({
-    variable: "--font-montserrat",
+const russoOne = Russo_One({
+    variable: "--font-russo-one",
     subsets: ["latin"],
+    weight: "400",
 })
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${montserrat.variable} h-full antialiased`}
+      className={`${inter.variable} ${russoOne.variable} h-full antialiased`}
     >
         <body className="min-h-screen flex flex-col w-full font-sans">
             <BaseLayout>
