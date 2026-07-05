@@ -4,6 +4,23 @@
  */
 
 export interface paths {
+    "/api/v1/iam/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Me */
+        get: operations["get_me_api_v1_iam_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/iam/registration": {
         parameters: {
             query?: never;
@@ -1397,6 +1414,15 @@ export interface components {
             tax_id: string;
             legal_form: components["schemas"]["LegalForm"];
         };
+        /** CustomerMeResponse */
+        CustomerMeResponse: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            role: "customer";
+            profile: components["schemas"]["CustomerProfileResponse"];
+        };
         /** CustomerProfileResponse */
         CustomerProfileResponse: {
             /**
@@ -1568,6 +1594,14 @@ export interface components {
          * @enum {string}
          */
         MediaType: "image/png" | "image/jpeg" | "image/webp";
+        /** NoRoleMeResponse */
+        NoRoleMeResponse: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            role: "None";
+        };
         /** PaginatedResponse[ListingCardResponse] */
         PaginatedResponse_ListingCardResponse_: {
             /** Items */
@@ -1786,6 +1820,15 @@ export interface components {
              */
             preview_image: string;
         };
+        /** VendorMeResponse */
+        VendorMeResponse: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            role: "vendor";
+            profile: components["schemas"]["VendorProfileResponse"];
+        };
         /** VendorProfileResponse */
         VendorProfileResponse: {
             /**
@@ -1833,6 +1876,37 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    get_me_api_v1_iam_me_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "X-Client-Type"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CustomerMeResponse"] | components["schemas"]["VendorMeResponse"] | components["schemas"]["NoRoleMeResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     create_new_user_api_v1_iam_registration_post: {
         parameters: {
             query?: never;

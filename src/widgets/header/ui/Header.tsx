@@ -1,14 +1,19 @@
 "use client";
 
-import { useRef } from "react";
+import {useEffect, useRef} from "react";
 import { HeaderLogo } from "../ui/HeaderLogo";
 import { HeaderNav } from "../ui/HeaderNav";
 import { HeaderCatalog } from "../ui/HeaderCatalog";
 import { HeaderSearch } from "../ui/HeaderSearch";
 import { HeaderAddListing } from "../ui/HeaderAddListing";
+import {useSessionStore} from "@/entities/session/model/store";
 
 export function Header() {
     const headerRef = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        useSessionStore.getState().fetchSession();
+    }, []);
 
     return (
         <header ref={headerRef} className="relative top-0 z-50 w-full bg-white">
