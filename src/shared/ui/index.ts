@@ -53,3 +53,5 @@ export {
     DialogTitle,
     DialogTrigger,
 } from "./dialog";
+
+export { OtpForm } from "./otp-dialog";

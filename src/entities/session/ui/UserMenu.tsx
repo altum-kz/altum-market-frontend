@@ -1,12 +1,12 @@
-import {MeResponse} from "@/entities/session/model/types";
+// entities/session/ui/UserMenu.tsx
+"use client";
+
 import Link from "next/link";
-import {AvatarFallback, Avatar} from "@/shared/ui";
+import { Avatar, AvatarFallback } from "@/shared/ui";
+import { getDisplayName } from "../model/getDisplayName";
+import type { MeResponse } from "../model/types";
 
-interface UserMenuProps {
-    data: MeResponse;
-}
-
-export function UserMenu({ data }: UserMenuProps) {
+export function UserMenu({ data }: { data: MeResponse }) {
     if (data.role === "None") {
         return (
             <Link href="/onboarding" className="text-sm font-medium text-brand hover:opacity-75">
@@ -15,15 +15,13 @@ export function UserMenu({ data }: UserMenuProps) {
         );
     }
 
-    const displayName = data.role === "customer"
-        ? `${data.profile.last_name} ${data.profile.first_name}`
-        : data.profile.shop_name ?? data.profile.legal_name;
+    const displayName = getDisplayName(data);
 
     return (
-        <Link href="/dashboard" title={displayName} className="flex items-center gap-2">
+        <Link href="/dashboard" title={displayName}>
             <Avatar size="lg">
                 <AvatarFallback>{displayName.charAt(0).toUpperCase()}</AvatarFallback>
             </Avatar>
         </Link>
-    )
+    );
 }

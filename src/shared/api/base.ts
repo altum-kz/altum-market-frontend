@@ -3,7 +3,7 @@ import { ApiError } from "./error";
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "https://api.agrow.asia";
 
 interface RequestOptions {
-    method?: "GET" | "POST" | "PUT" | "DELETE";
+    method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
     body?: unknown;
 }
 
