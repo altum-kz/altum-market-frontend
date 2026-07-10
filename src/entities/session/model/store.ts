@@ -8,12 +8,14 @@ interface SessionStore {
     isLoaded: boolean;
     isLoading: boolean;
     fetchSession: () => Promise<void>;
+    logout: () => void;
 }
 
 export const useSessionStore = create<SessionStore>((set, get) => ({
     session: { status: "loading" },
     isLoaded: false,
     isLoading: false,
+
     fetchSession: async () => {
         if (get().isLoaded || get().isLoading) return;
         set({ isLoading: true });
@@ -30,4 +32,13 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
             set({ isLoading: false });
         }
     },
+
+    logout: () => {
+        set({
+            session: { status: "unauthenticated" },
+            isLoaded: true,
+            isLoading: false,
+        });
+    },
+
 }));

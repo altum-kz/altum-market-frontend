@@ -5,12 +5,15 @@ import { AccordionItem, AccordionTrigger, AccordionContent } from "@/shared/ui/a
 import { ChangeEmailForm } from "@/features/edit-email-form/ui/ChangeEmailForm";
 import { ConfirmEmailChangeForm } from "@/features/confirm-email-change";
 import {useRouter} from "next/navigation";
+import {ChangePasswordForm} from "@/features/change-password";
+import {useSessionStore} from "@/entities/session";
 
 interface SecurityAccordionProps {
     email: string;
+    passwordChangedAt: string;
 }
 
-export function SecurityAccordion({ email }: SecurityAccordionProps) {
+export function SecurityAccordion({ email, passwordChangedAt }: SecurityAccordionProps) {
     const router = useRouter();
 
     const [pendingEmail, setPendingEmail] = useState(email);
@@ -23,6 +26,11 @@ export function SecurityAccordion({ email }: SecurityAccordionProps) {
 
     const handleEmailChangeConfirmSuccess = () => {
         return router.replace("/dashboard");
+    }
+
+    const handlePasswordChangedSuccess = () => {
+        useSessionStore.getState().logout();
+        return router.replace("/login");
     }
 
     return (
@@ -41,6 +49,11 @@ export function SecurityAccordion({ email }: SecurityAccordionProps) {
                     open={isOtpModalOpen}
                     onOpenChange={setIsOtpModalOpen}
                     onSuccess={handleEmailChangeConfirmSuccess}
+                />
+
+                <ChangePasswordForm
+                    passwordChangedAt={passwordChangedAt}
+                    onSuccess={handlePasswordChangedSuccess}
                 />
             </AccordionContent>
         </AccordionItem>
