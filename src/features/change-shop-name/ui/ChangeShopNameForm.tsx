@@ -35,8 +35,8 @@ export function ChangeShopNameForm({ defaultValues }: ChangeShopNameFormProps) {
         return (
             <div className="flex justify-between items-start py-2">
                 <div className="flex flex-col gap-1">
-                    <span className="text-sm text-muted-foreground font-bold">Название магазина</span>
-                    <span className="text-sm font-medium">{data.shop_name}</span>
+                    <span className="text-sm text-muted-foreground font-semibold">Название магазина</span>
+                    <span className="text-sm">{data.shop_name}</span>
                 </div>
                 <Button
                     type="button"
