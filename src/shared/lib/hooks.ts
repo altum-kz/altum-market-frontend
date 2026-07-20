@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useEffect, RefObject } from "react";
 
 export function useHeaderHeight(ref: RefObject<HTMLElement | null>) {
@@ -20,4 +21,15 @@ export function useHeaderHeight(ref: RefObject<HTMLElement | null>) {
         observer.observe(ref.current);
         return () => observer.disconnect();
     }, [ref]);
+}
+
+export function useEditMode() {
+    const [mode, setMode] = useState<"view" | "edit">("view");
+
+    return {
+        mode,
+        startEdit: () => setMode("edit"),
+        cancelEdit: () => setMode("view"),
+        finishEdit: () => setMode("view"),
+    };
 }

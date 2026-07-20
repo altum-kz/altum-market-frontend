@@ -1438,6 +1438,11 @@ export interface components {
             patronymic: string | null;
             /** Email */
             email: string;
+            /**
+             * Password Changed At
+             * Format: date-time
+             */
+            password_changed_at: string;
             /** Avatar Url */
             avatar_url: string | null;
         };
@@ -1843,6 +1848,11 @@ export interface components {
             vendor_id: string;
             /** Email */
             email: string;
+            /**
+             * Password Changed At
+             * Format: date-time
+             */
+            password_changed_at: string;
             /** Is Verified */
             is_verified: boolean;
             /** Contact Last Name */
