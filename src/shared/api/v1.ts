@@ -682,23 +682,6 @@ export interface paths {
         patch: operations["change_subcategory_name_api_v1_catalog_subcategory__subcategory_id__name_patch"];
         trace?: never;
     };
-    "/api/v1/catalog/subcategory/{subcategory_id}/attributes": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Change Subcategory Attributes */
-        patch: operations["change_subcategory_attributes_api_v1_catalog_subcategory__subcategory_id__attributes_patch"];
-        trace?: never;
-    };
     "/api/v1/catalog/subcategory/{subcategory_id}": {
         parameters: {
             query?: never;
@@ -711,6 +694,94 @@ export interface paths {
         post?: never;
         /** Delete Subcategory */
         delete: operations["delete_subcategory_api_v1_catalog_subcategory__subcategory_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalog/attribute-definition/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get All Attribute Definitions */
+        get: operations["get_all_attribute_definitions_api_v1_catalog_attribute_definition__get"];
+        put?: never;
+        /** Create Attribute Definition */
+        post: operations["create_attribute_definition_api_v1_catalog_attribute_definition__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalog/{subcategory_id}/attributes/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Attach Attribute */
+        post: operations["attach_attribute_api_v1_catalog__subcategory_id__attributes__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalog/{subcategory_id}/attributes/{link_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Detach Attribute */
+        delete: operations["detach_attribute_api_v1_catalog__subcategory_id__attributes__link_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalog/attribute-group/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get All Attribute Groups */
+        get: operations["get_all_attribute_groups_api_v1_catalog_attribute_group__get"];
+        put?: never;
+        /** Create Attribute Group */
+        post: operations["create_attribute_group_api_v1_catalog_attribute_group__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalog/unit-of-measure/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get All Units */
+        get: operations["get_all_units_api_v1_catalog_unit_of_measure__get"];
+        put?: never;
+        /** Create Unit Of Measure */
+        post: operations["create_unit_of_measure_api_v1_catalog_unit_of_measure__post"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -1036,13 +1107,20 @@ export interface components {
             /** Confirm Code */
             confirm_code: string;
         };
-        /** Attribute */
-        Attribute: {
-            /** Key */
-            key: string;
-            /** Label */
-            label: string;
-            type: components["schemas"]["AttributeType"];
+        /** AttachAttributeRequest */
+        AttachAttributeRequest: {
+            /**
+             * Attribute Id
+             * Format: uuid
+             */
+            attribute_id: string;
+            /**
+             * Group Id
+             * Format: uuid
+             */
+            group_id: string;
+            /** Unit Id */
+            unit_id?: string | null;
             /**
              * Required
              * @default false
@@ -1053,32 +1131,80 @@ export interface components {
              * @default false
              */
             filterable: boolean;
-            /** Unit */
-            unit?: {
-                [key: string]: string;
-            } | string | null;
-            /** Options */
-            options?: {
-                [key: string]: string;
-            }[] | string[] | null;
-            /** Source */
-            source?: string | null;
             /**
              * Position
              * @default 0
              */
             position: number;
         };
+        /** AttributeDefinitionResponse */
+        AttributeDefinitionResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            type: components["schemas"]["AttributeType"];
+            /** Options */
+            options: components["schemas"]["OptionItem"][];
+            /** Source */
+            source?: string | null;
+        };
+        /** AttributeFieldResponse */
+        AttributeFieldResponse: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            type: components["schemas"]["AttributeType"];
+            /** Required */
+            required: boolean;
+            /** Filterable */
+            filterable: boolean;
+            /** Unit */
+            unit: {
+                [key: string]: unknown;
+            } | null;
+            /** Options */
+            options: {
+                [key: string]: unknown;
+            }[];
+            /** Source */
+            source?: string | null;
+        };
+        /** AttributeGroupFieldsResponse */
+        AttributeGroupFieldsResponse: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /** Position */
+            position: number;
+            /** Fields */
+            fields: components["schemas"]["AttributeFieldResponse"][];
+        };
+        /** AttributeGroupResponse */
+        AttributeGroupResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /** Position */
+            position: number;
+        };
         /** AttributeResponse */
         AttributeResponse: {
-            /** Base Fields */
-            base_fields: {
-                [key: string]: unknown;
-            }[];
-            /** Dynamic Fields */
-            dynamic_fields: {
-                [key: string]: unknown;
-            }[];
+            /** Groups */
+            groups: components["schemas"]["AttributeGroupFieldsResponse"][];
         };
         /**
          * AttributeType
@@ -1310,6 +1436,33 @@ export interface components {
             /** Raw Password */
             raw_password: string;
         };
+        /** CreateAttributeDefinitionRequest */
+        CreateAttributeDefinitionRequest: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            type: components["schemas"]["AttributeType"];
+            /**
+             * Options
+             * @default []
+             */
+            options: components["schemas"]["OptionItem"][];
+            /** Source */
+            source?: string | null;
+        };
+        /** CreateAttributeGroupRequest */
+        CreateAttributeGroupRequest: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /**
+             * Position
+             * @default 0
+             */
+            position: number;
+        };
         /** CreateBrandRequest */
         CreateBrandRequest: {
             /** Name */
@@ -1397,8 +1550,13 @@ export interface components {
             category_id: string;
             /** Name */
             name: string;
-            /** Attributes */
-            attributes: components["schemas"]["Attribute"][];
+        };
+        /** CreateUnitOfMeasureRequest */
+        CreateUnitOfMeasureRequest: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
         };
         /** CreateVendorRequest */
         CreateVendorRequest: {
@@ -1607,6 +1765,13 @@ export interface components {
              */
             role: "None";
         };
+        /** OptionItem */
+        OptionItem: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+        };
         /** PaginatedResponse[ListingCardResponse] */
         PaginatedResponse_ListingCardResponse_: {
             /** Items */
@@ -1675,11 +1840,6 @@ export interface components {
             /** Name */
             name: string;
         };
-        /** ReplaceSubcategoryAttributeRequest */
-        ReplaceSubcategoryAttributeRequest: {
-            /** Attributes */
-            attributes: components["schemas"]["Attribute"][];
-        };
         /** ResendCodeRequest */
         ResendCodeRequest: {
             /**
@@ -1709,6 +1869,37 @@ export interface components {
             /** Categories */
             categories: components["schemas"]["CategoryResponse"][];
         };
+        /** SubcategoryAttributeResponse */
+        SubcategoryAttributeResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Subcategory Id
+             * Format: uuid
+             */
+            subcategory_id: string;
+            /**
+             * Attribute Id
+             * Format: uuid
+             */
+            attribute_id: string;
+            /**
+             * Group Id
+             * Format: uuid
+             */
+            group_id: string;
+            /** Unit Id */
+            unit_id: string | null;
+            /** Required */
+            required: boolean;
+            /** Filterable */
+            filterable: boolean;
+            /** Position */
+            position: number;
+        };
         /** SubcategoryResponse */
         SubcategoryResponse: {
             /**
@@ -1733,6 +1924,18 @@ export interface components {
             legal_form: components["schemas"]["LegalForm"];
             /** Is Liquidation */
             is_liquidation: boolean;
+        };
+        /** UnitOfMeasureResponse */
+        UnitOfMeasureResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
         };
         /** UpdateBrandRequest */
         UpdateBrandRequest: {
@@ -3616,7 +3819,7 @@ export interface operations {
             };
         };
     };
-    change_subcategory_attributes_api_v1_catalog_subcategory__subcategory_id__attributes_patch: {
+    delete_subcategory_api_v1_catalog_subcategory__subcategory_id__delete: {
         parameters: {
             query?: never;
             header?: never;
@@ -3625,11 +3828,7 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ReplaceSubcategoryAttributeRequest"];
-            };
-        };
+        requestBody?: never;
         responses: {
             /** @description Successful Response */
             200: {
@@ -3651,12 +3850,101 @@ export interface operations {
             };
         };
     };
-    delete_subcategory_api_v1_catalog_subcategory__subcategory_id__delete: {
+    get_all_attribute_definitions_api_v1_catalog_attribute_definition__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttributeDefinitionResponse"][];
+                };
+            };
+        };
+    };
+    create_attribute_definition_api_v1_catalog_attribute_definition__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateAttributeDefinitionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttributeDefinitionResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    attach_attribute_api_v1_catalog__subcategory_id__attributes__post: {
         parameters: {
             query?: never;
             header?: never;
             path: {
                 subcategory_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AttachAttributeRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubcategoryAttributeResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    detach_attribute_api_v1_catalog__subcategory_id__attributes__link_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subcategory_id: string;
+                link_id: string;
             };
             cookie?: never;
         };
@@ -3669,6 +3957,112 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_all_attribute_groups_api_v1_catalog_attribute_group__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttributeGroupResponse"][];
+                };
+            };
+        };
+    };
+    create_attribute_group_api_v1_catalog_attribute_group__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateAttributeGroupRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttributeGroupResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_all_units_api_v1_catalog_unit_of_measure__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnitOfMeasureResponse"][];
+                };
+            };
+        };
+    };
+    create_unit_of_measure_api_v1_catalog_unit_of_measure__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateUnitOfMeasureRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnitOfMeasureResponse"];
                 };
             };
             /** @description Validation Error */
